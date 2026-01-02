@@ -1,0 +1,10 @@
+- O objetivo dessa pasta é mostrar o funcionamento dos pacotes em GO
+- Mostra também como utiliza funções de outros pacotes, metodos publicos e privados.
+- Para importar de outro pacote se utiliza o modulo/pacote, neste caso o modulo é o arquivo modulo mesmo
+
+go mod init nomeModulo para criar o modulo, ele cria o arquivo go.mod 
+que tem a versao do go e o gerenciamento das bibliotecas
+
+após criar o modulo, pode-se usar go build que cria o arquivo com o nome do modulo, modulo neste caso.
+é um arquivo binário executavel, que compila todo o codigo do projeto, para rodar o projeto basta chamar esse arquivo
+./modulo, sempre que fizer alterações no código tem que usar o build novamente para atualizar.
