@@ -2,17 +2,21 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+	"testcrudweb/internal/handler"
 )
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("Servidor Go em funcionamento!")
-		w.Write([]byte("Hello World"))
-	})
+	startServer()
+}
+
+func startServer() {
+	handler.Get("/", handler.Root)
+	fmt.Println("Servidor Go em funcionamento!")
 
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 }
