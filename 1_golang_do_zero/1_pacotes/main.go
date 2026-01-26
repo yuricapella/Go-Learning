@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"modulo/auxiliar"
+
+	"github.com/yuricapella/Go-Learning/1_golang_do_zero/1_pacotes/auxiliar"
 )
 
 func main() {
