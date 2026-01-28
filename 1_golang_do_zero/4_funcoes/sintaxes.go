@@ -58,7 +58,27 @@ func sintaxeRetornoNomeado(a, b int) (resultado int, erro error) {
 func sintaxeUsarRetornoNomeado() {
 	resultado, erro := sintaxeRetornoNomeado(10, 5)
 	if erro != nil {
-		fmt.Println("Erro:", erro)
+		fmt.Println(erro)
 	}
-	fmt.Println("Resultado:", resultado)
+	fmt.Println(resultado)
+}
+
+func sintaxeFuncaoVariadica(numeros ...int) int {
+	soma := 0
+	for _, num := range numeros {
+		soma += num
+	}
+	return soma
+}
+
+func sintaxeUsarFuncaoVariadica() {
+	resultado1 := sintaxeFuncaoVariadica(1, 2, 3)
+	fmt.Println(resultado1)
+
+	resultado2 := sintaxeFuncaoVariadica(10, 20, 30, 40, 50)
+	fmt.Println(resultado2)
+
+	numeros := []int{5, 10, 15}
+	resultado3 := sintaxeFuncaoVariadica(numeros...)
+	fmt.Println(resultado3)
 }
