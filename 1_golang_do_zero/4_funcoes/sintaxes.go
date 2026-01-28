@@ -88,3 +88,17 @@ func sintaxeUsarFuncaoVariadica() {
 	resultado3 := sintaxeFuncaoVariadica(numeros...)
 	fmt.Println(resultado3)
 }
+
+func sintaxeFuncaoRecursivaFatorial(n int) int {
+	if n <= 1 {
+		return 1
+	}
+	return n * sintaxeFuncaoRecursivaFatorial(n-1)
+}
+
+func sintaxeFuncaoRecursivaFibonacci(n int) int {
+	if n <= 1 {
+		return n
+	}
+	return sintaxeFuncaoRecursivaFibonacci(n-1) + sintaxeFuncaoRecursivaFibonacci(n-2)
+}
