@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func sintaxeFuncaoSimples(a int, b int) int {
 	return a + b
 }
@@ -42,4 +44,21 @@ func sintaxeUsarRetornoComErro() {
 	}
 	_ = nome
 	_ = idade
+}
+
+func sintaxeRetornoNomeado(a, b int) (resultado int, erro error) {
+	if b == 0 {
+		erro = fmt.Errorf("divisão por zero não permitida")
+		return
+	}
+	resultado = a / b
+	return
+}
+
+func sintaxeUsarRetornoNomeado() {
+	resultado, erro := sintaxeRetornoNomeado(10, 5)
+	if erro != nil {
+		fmt.Println("Erro:", erro)
+	}
+	fmt.Println("Resultado:", resultado)
 }
