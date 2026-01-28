@@ -16,6 +16,7 @@ func sintaxeFuncaoMultiplosRetornos(n1, n2 int) (int, int, int, int) {
 
 func sintaxeFuncaoAnonima() {
 	var f = func() {
+		fmt.Println("Função f")
 	}
 
 	f()
@@ -25,7 +26,12 @@ func sintaxeFuncaoAnonima() {
 	}
 
 	resultado2 := f2("Função f2")
-	_ = resultado2
+	fmt.Println(resultado2)
+
+	retorno := func(texto string) string {
+		return fmt.Sprintf("recebido -> %s", texto)
+	}("Passando parametro")
+	fmt.Println(retorno)
 }
 
 func sintaxeIgnorarRetornos() {
