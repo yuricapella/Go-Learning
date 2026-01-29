@@ -36,7 +36,7 @@ func sintaxeFuncaoAnonima() {
 
 func sintaxeIgnorarRetornos() {
 	soma2, _, _, _ := sintaxeFuncaoMultiplosRetornos(10, 20)
-	_ = soma2
+	fmt.Println(soma2)
 }
 
 func sintaxeRetornoComErro(nome string, idade int) (string, int, error) {
@@ -46,10 +46,10 @@ func sintaxeRetornoComErro(nome string, idade int) (string, int, error) {
 func sintaxeUsarRetornoComErro() {
 	nome, idade, erro := sintaxeRetornoComErro("João", 20)
 	if erro != nil {
-		_ = erro
+		fmt.Println(erro)
 	}
-	_ = nome
-	_ = idade
+	fmt.Println(nome)
+	fmt.Println(idade)
 }
 
 func sintaxeRetornoNomeado(a, b int) (resultado int, erro error) {
@@ -101,4 +101,12 @@ func sintaxeFuncaoRecursivaFibonacci(n int) int {
 		return n
 	}
 	return sintaxeFuncaoRecursivaFibonacci(n-1) + sintaxeFuncaoRecursivaFibonacci(n-2)
+}
+
+func init() {
+	fmt.Println("init executado")
+}
+
+func init() {
+	fmt.Println("Segunda init")
 }
