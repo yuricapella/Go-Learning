@@ -73,6 +73,8 @@
 
 **Por quê:** Separa referência rápida de explicação didática detalhada.
 
+**⚠️ ATENÇÃO:** Arquivos que terminam com `_test.go` são **ignorados pelo compilador Go** quando não está em modo de teste. Use apenas para testes reais (`go test`). Para código didático/demonstrativo, use nomes normais (ex: `comandos.go`, não `comandos_test.go`).
+
 ---
 
 ### 7. Comparações Quando Relevante
@@ -125,6 +127,33 @@
 
 ---
 
+### 11. Separação de Conteúdo Didático e Conteúdo das Aulas
+
+**Regra fundamental:**
+- Conteúdo didático deve estar em pasta separada (ex: `conteudo_*_didaticos/`)
+- **NUNCA** duplicar arquivos das aulas originais na pasta didática
+- Conteúdo das aulas permanece intacto em suas pastas originais
+- Apenas arquivos didáticos (`main.go`, `sintaxes.go`, `testes/*.go`) na pasta didática
+
+**Estrutura correta:**
+```
+pasta_assunto/
+├── conteudo_assunto_didatico/    # Apenas conteúdo didático
+│   ├── main.go
+│   ├── sintaxes.go
+│   └── testes/ ou conceitos/
+├── introducao/                    # Conteúdo original (intacto)
+└── avancado/                      # Conteúdo original (intacto)
+```
+
+**Por quê:** 
+- Evita confusão entre conteúdo didático e exemplos práticos das aulas
+- Mantém organização clara e separação de responsabilidades
+- Facilita manutenção sem afetar conteúdo original
+- Permite referenciar exemplos das aulas sem duplicá-los
+
+---
+
 ## Checklist para Criar Arquivo Didático
 
 - [ ] Função `Demonstrar*()` principal que orquestra o conteúdo
@@ -138,6 +167,7 @@
 - [ ] Casos de uso práticos quando apropriado
 - [ ] Sem redundâncias entre exemplos
 - [ ] Arquivo `sintaxes.go` atualizado com sintaxe básica
+- [ ] Conteúdo didático em pasta separada (não duplicar arquivos das aulas)
 
 ---
 
