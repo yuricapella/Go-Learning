@@ -5,6 +5,7 @@ go 1.25.5
 require (
 	github.com/badoux/checkmail v1.2.4
 	github.com/urfave/cli v1.22.17
+	golang.org/x/text v0.33.0
 )
 
 require (
