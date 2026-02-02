@@ -32,6 +32,7 @@ Este projeto segue o padrão [Conventional Commits](https://www.conventionalcomm
 3. **Corpo**: Bullet points diretos descrevendo o que foi feito
 4. **Sem redundâncias**: Não mencione "em Go" ou "Go" (projeto já é sobre Go)
 5. **Dependências**: Se adicionar, mencione go.mod e go.sum no final
+6. **Foco no que foi feito**: Evite linhas genéricas. Foque apenas no que foi criado/modificado concretamente
 
 ## Exemplos Reais
 
