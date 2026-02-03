@@ -69,9 +69,30 @@
 - Apenas sintaxe básica, sem explicações extensas
 - Sem complexidade adicional
 - Serve como consulta rápida de "como construir"
-- Funções nomeadas `sintaxe*()` para fácil identificação
+- Funções nomeadas `Sintaxe*()` (com maiúscula, exportadas) para fácil identificação
 
-**Por quê:** Separa referência rápida de explicação didática detalhada.
+**Estrutura obrigatória:**
+- `sintaxes.go` deve estar em subpasta `sintaxes/` (não na raiz)
+- Package deve ser `sintaxe[Assunto]` (ex: `sintaxeHttp`, `sintaxeJson`)
+- Funções devem ser exportadas (começar com maiúscula)
+- Criar `sintaxes_test.go` na mesma pasta para testar as funções
+- Testes devem estar em package `sintaxe[Assunto]_test`
+
+**Estrutura correta:**
+```
+conteudo_assunto_didaticos/
+├── main.go
+├── sintaxes/                    # Subpasta obrigatória
+│   ├── sintaxes.go              # Package sintaxe[Assunto]
+│   └── sintaxes_test.go         # Package sintaxe[Assunto]_test
+└── conceitos/ ou testes/
+```
+
+**Por quê:** 
+- Separa referência rápida de explicação didática detalhada
+- Permite testar exemplos de sintaxe
+- Mantém organização consistente entre projetos
+- Facilita reutilização e manutenção
 
 **⚠️ ATENÇÃO:** Arquivos que terminam com `_test.go` são **ignorados pelo compilador Go** quando não está em modo de teste. Use apenas para testes reais (`go test`). Para código didático/demonstrativo, use nomes normais (ex: `comandos.go`, não `comandos_test.go`).
 
@@ -109,7 +130,7 @@
 **Padrões:**
 - `Demonstrar*()`: função principal que apresenta o conceito
 - `Exemplo*()`: exemplos individuais numerados
-- `sintaxe*()`: funções de referência sintática
+- `Sintaxe*()`: funções de referência sintática (exportadas, começam com maiúscula)
 - Variáveis descritivas em português para clareza didática
 
 **Por quê:** Consistência facilita navegação e compreensão do código.
@@ -140,7 +161,9 @@
 pasta_assunto/
 ├── conteudo_assunto_didatico/    # Apenas conteúdo didático
 │   ├── main.go
-│   ├── sintaxes.go
+│   ├── sintaxes/                 # Subpasta obrigatória
+│   │   ├── sintaxes.go           # Package sintaxe[Assunto]
+│   │   └── sintaxes_test.go      # Package sintaxe[Assunto]_test
 │   └── testes/ ou conceitos/
 ├── introducao/                    # Conteúdo original (intacto)
 └── avancado/                      # Conteúdo original (intacto)
@@ -166,7 +189,9 @@ pasta_assunto/
 - [ ] Comparações com alternativas quando relevante
 - [ ] Casos de uso práticos quando apropriado
 - [ ] Sem redundâncias entre exemplos
-- [ ] Arquivo `sintaxes.go` atualizado com sintaxe básica
+- [ ] Arquivo `sintaxes.go` em subpasta `sintaxes/` com package `sintaxe[Assunto]`
+- [ ] Funções de sintaxe exportadas (começam com maiúscula: `Sintaxe*()`)
+- [ ] Arquivo `sintaxes_test.go` criado na mesma pasta para testar sintaxes
 - [ ] Conteúdo didático em pasta separada (não duplicar arquivos das aulas)
 
 ---
