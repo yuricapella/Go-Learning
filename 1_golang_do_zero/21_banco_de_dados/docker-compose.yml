@@ -1,0 +1,22 @@
+# comando para iniciar, docker compose up -d
+# comando para parar, docker compose down
+# comando para ver os logs, docker compose logs -f
+# comando para ver os containers, docker ps
+# comando para ver os imagens, docker images
+
+services:
+  mysql-db:
+    image: mysql:8
+    container_name: db-teste
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dbteste
+      MYSQL_USER: yuri
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
