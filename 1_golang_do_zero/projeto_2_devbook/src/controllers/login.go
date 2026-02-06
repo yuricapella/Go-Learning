@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/yuricapella/Go-Learning/1_golang_do_zero/projeto_2_devbook/src/autenticacao"
 	"github.com/yuricapella/Go-Learning/1_golang_do_zero/projeto_2_devbook/src/banco"
 	"github.com/yuricapella/Go-Learning/1_golang_do_zero/projeto_2_devbook/src/modelos"
 	"github.com/yuricapella/Go-Learning/1_golang_do_zero/projeto_2_devbook/src/repositorios"
@@ -45,6 +46,11 @@ func Login(responseWriter http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	respostas.JSON(responseWriter, http.StatusOK, "Login realizado com sucesso")
+	token, erro := autenticacao.CriarToken(usuarioSalvoNoBanco.ID)
+	if erro != nil {
+		respostas.Erro(responseWriter, http.StatusInternalServerError, erro)
+		return
+	}
 
+	responseWriter.Write([]byte(token))
 }
