@@ -15,4 +15,5 @@ require (
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
+	golang.org/x/crypto v0.47.0 // indirect
 )
