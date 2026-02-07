@@ -13,7 +13,9 @@ type Rota struct {
 	Metodo             string
 	Funcao             func(http.ResponseWriter, *http.Request)
 	RequerAutenticacao bool
-	RequerOwnerShip    bool
+
+	// Se true, a rota requer que o usuário seja o mesmo que o usuário autenticado
+	RequerMesmoUsuario bool
 }
 
 // Coloca todas as rotas dentro do router
@@ -26,7 +28,7 @@ func Configurar(router *mux.Router) *mux.Router {
 		if rota.RequerAutenticacao {
 			var handler http.HandlerFunc = rota.Funcao
 
-			if rota.RequerOwnerShip {
+			if rota.RequerMesmoUsuario {
 				handler = middlewares.VerificarUsuario(handler)
 			}
 
