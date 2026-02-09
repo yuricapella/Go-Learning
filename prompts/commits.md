@@ -87,3 +87,14 @@ Use seções com o nome do arquivo ou caminho relativo seguido de dois pontos (`
 - **NUNCA** execute `git commit` automaticamente
 - **NUNCA** tente criar ou modificar arquivos durante a análise
 - O usuário sempre usa o modo "ask" do Cursor e não há permissão de escrita
+- A mensagem completa do commit deve ser apresentada em formato de texto dentro de uma caixa delimitada para fácil cópia
+
+## Validação de Conteúdo
+
+Antes de finalizar o commit, valide que:
+- Cada seção possui pelo menos um bullet point com informação útil
+- Não há seções vazias ou com mensagens genéricas
+- Todos os arquivos modificados foram analisados em detalhes
+- Mudanças específicas foram identificadas e documentadas
+- O commit reflete fielmente o trabalho realizado sem omitir detalhes importantes
+- Análise profunda foi realizada para não esquecer nenhum detalhe relevante
