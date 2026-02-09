@@ -1,0 +1,17 @@
+
+services:
+  mysql-db:
+    image: mysql:8
+    container_name: devbook-db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_SENHA}
+      MYSQL_DATABASE: ${DB_NOME}
+      MYSQL_USER: ${DB_USUARIO}
+      MYSQL_PASSWORD: ${DB_SENHA}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

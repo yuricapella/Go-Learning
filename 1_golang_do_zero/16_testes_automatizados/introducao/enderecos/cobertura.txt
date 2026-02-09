@@ -1,0 +1,7 @@
+mode: set
+github.com/yuricapella/Go-Learning/1_golang_do_zero/17_testes_automatizados/enderecos/enderecos.go:11.45,24.36 5 1
+github.com/yuricapella/Go-Learning/1_golang_do_zero/17_testes_automatizados/enderecos/enderecos.go:24.36,25.40 1 1
+github.com/yuricapella/Go-Learning/1_golang_do_zero/17_testes_automatizados/enderecos/enderecos.go:25.40,27.4 1 1
+github.com/yuricapella/Go-Learning/1_golang_do_zero/17_testes_automatizados/enderecos/enderecos.go:30.2,30.29 1 1
+github.com/yuricapella/Go-Learning/1_golang_do_zero/17_testes_automatizados/enderecos/enderecos.go:30.29,33.3 1 1
+github.com/yuricapella/Go-Learning/1_golang_do_zero/17_testes_automatizados/enderecos/enderecos.go:35.2,35.25 1 0
