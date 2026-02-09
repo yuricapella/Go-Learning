@@ -15,20 +15,22 @@ type Rota struct {
 	RequerAutenticacao bool
 
 	// Se true, a rota requer que o usuário seja o mesmo que o usuário autenticado
-	RequerMesmoUsuario bool
+	RequerMesmoUsuarioNaRequisicao bool
 }
 
 // Coloca todas as rotas dentro do router
 func Configurar(router *mux.Router) *mux.Router {
 	rotas := rotasUsuarios
 	rotas = append(rotas, rotaLogin)
+	rotas = append(rotas, rotasPublicacoes...)
+	// colocando ... ele entende que deve adicionar cada item do slice ao inves de um slice em si.
 
 	for _, rota := range rotas {
 
 		if rota.RequerAutenticacao {
 			var handler http.HandlerFunc = rota.Funcao
 
-			if rota.RequerMesmoUsuario {
+			if rota.RequerMesmoUsuarioNaRequisicao {
 				handler = middlewares.VerificarUsuario(handler)
 			}
 
