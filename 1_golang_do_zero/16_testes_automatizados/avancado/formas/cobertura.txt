@@ -1,0 +1,4 @@
+mode: set
+github.com/yuricapella/Go-Learning/1_golang_do_zero/17_testes_automatizados/avancado/formas/formas.go:12.30,14.2 1 0
+github.com/yuricapella/Go-Learning/1_golang_do_zero/17_testes_automatizados/avancado/formas/formas.go:21.43,23.2 1 1
+github.com/yuricapella/Go-Learning/1_golang_do_zero/17_testes_automatizados/avancado/formas/formas.go:29.39,31.2 1 1
