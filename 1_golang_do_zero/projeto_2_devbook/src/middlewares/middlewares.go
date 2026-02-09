@@ -1,12 +1,9 @@
 package middlewares
 
 import (
-	"errors"
 	"fmt"
 	"net/http"
-	"strconv"
 
-	"github.com/gorilla/mux"
 	"github.com/yuricapella/Go-Learning/1_golang_do_zero/projeto_2_devbook/src/autenticacao"
 	"github.com/yuricapella/Go-Learning/1_golang_do_zero/projeto_2_devbook/src/respostas"
 )
@@ -36,32 +33,6 @@ func Autenticar(proximaFuncao http.HandlerFunc) http.HandlerFunc {
 			respostas.Erro(responseWriter, http.StatusUnauthorized, erro)
 			return
 		}
-		proximaFuncao(responseWriter, request)
-	}
-}
-
-// VerificarUsuario - verifica se o usuarioID do token corresponde ao usuarioID da URL
-func VerificarUsuario(proximaFuncao http.HandlerFunc) http.HandlerFunc {
-	return func(responseWriter http.ResponseWriter, request *http.Request) {
-
-		usuarioIDNoToken, erro := autenticacao.ExtrairUsuarioID(request)
-		if erro != nil {
-			respostas.Erro(responseWriter, http.StatusUnauthorized, erro)
-			return
-		}
-
-		parametros := mux.Vars(request)
-		usuarioID, erro := strconv.ParseUint(parametros["usuarioId"], 10, 64)
-		if erro != nil {
-			respostas.Erro(responseWriter, http.StatusBadRequest, errors.New("ID de usuário inválido"))
-			return
-		}
-
-		if usuarioID != usuarioIDNoToken {
-			respostas.Erro(responseWriter, http.StatusForbidden, errors.New("Não é possível realizar esta operação em outro usuário"))
-			return
-		}
-
 		proximaFuncao(responseWriter, request)
 	}
 }

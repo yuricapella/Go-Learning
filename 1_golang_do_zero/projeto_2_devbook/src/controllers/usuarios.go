@@ -16,6 +16,29 @@ import (
 	"github.com/yuricapella/Go-Learning/1_golang_do_zero/projeto_2_devbook/src/seguranca"
 )
 
+// verificarUsuarioNaRequisicao - verifica se o usuarioID do token corresponde ao usuarioID da URL
+func verificarUsuarioNaRequisicao(responseWriter http.ResponseWriter, request *http.Request) bool {
+	usuarioIDNoToken, erro := autenticacao.ExtrairUsuarioID(request)
+	if erro != nil {
+		respostas.Erro(responseWriter, http.StatusUnauthorized, erro)
+		return false
+	}
+
+	parametros := mux.Vars(request)
+	usuarioID, erro := strconv.ParseUint(parametros["usuarioId"], 10, 64)
+	if erro != nil {
+		respostas.Erro(responseWriter, http.StatusBadRequest, errors.New("ID de usuário inválido"))
+		return false
+	}
+
+	if usuarioID != usuarioIDNoToken {
+		respostas.Erro(responseWriter, http.StatusForbidden, errors.New("Não é possível realizar esta operação em outro usuário"))
+		return false
+	}
+
+	return true
+}
+
 func CriarUsuario(responseWriter http.ResponseWriter, request *http.Request) {
 	corpoRequest, erro := io.ReadAll(request.Body)
 	if erro != nil {
@@ -97,6 +120,10 @@ func BuscarUsuarioPorID(responseWriter http.ResponseWriter, request *http.Reques
 }
 
 func AtualizarUsuario(responseWriter http.ResponseWriter, request *http.Request) {
+	if !verificarUsuarioNaRequisicao(responseWriter, request) {
+		return
+	}
+
 	parametros := mux.Vars(request)
 	usuarioID, erro := strconv.ParseUint(parametros["usuarioId"], 10, 64)
 	if erro != nil {
@@ -139,6 +166,10 @@ func AtualizarUsuario(responseWriter http.ResponseWriter, request *http.Request)
 }
 
 func DeletarUsuario(responseWriter http.ResponseWriter, request *http.Request) {
+	if !verificarUsuarioNaRequisicao(responseWriter, request) {
+		return
+	}
+
 	parametros := mux.Vars(request)
 	usuarioID, erro := strconv.ParseUint(parametros["usuarioId"], 10, 64)
 	if erro != nil {
@@ -291,6 +322,10 @@ func BuscarSeguidos(responseWriter http.ResponseWriter, request *http.Request) {
 
 // AtualizarSenha - atualiza a senha de um usuário
 func AtualizarSenha(responseWriter http.ResponseWriter, request *http.Request) {
+	if !verificarUsuarioNaRequisicao(responseWriter, request) {
+		return
+	}
+
 	parametros := mux.Vars(request)
 	usuarioID, erro := strconv.ParseUint(parametros["usuarioId"], 10, 64)
 	if erro != nil {
