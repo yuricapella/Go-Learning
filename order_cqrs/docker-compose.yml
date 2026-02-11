@@ -1,16 +1,14 @@
-
-
 services:
   mysql-db:
     image: mysql:8
     container_name: mysql-db
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: ecommerce_write
-      MYSQL_USER: ecommerce
-      MYSQL_PASSWORD: ecommerce123
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "3306:3306"
+      - "${MYSQL_PORT}:3306"
     volumes:
       - mysql_data:/var/lib/mysql
 
@@ -18,7 +16,7 @@ services:
     image: mongo:5
     container_name: mongodb
     ports:
-      - "27017:27017"
+      - "${MONGODB_PORT}:27017"
     volumes:
       - mongo_data:/data/db
 
@@ -26,11 +24,17 @@ services:
     image: rabbitmq:3-management
     container_name: rabbitmq
     ports:
-      - "5672:5672"
+      - "${RABBITMQ_PORT}:5672"
       - "15672:15672"    # painel web do RabbitMQ
     environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
 volumes:
   mysql_data:

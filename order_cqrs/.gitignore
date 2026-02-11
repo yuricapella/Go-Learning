@@ -1,0 +1,108 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Binaries and executables
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+bin/
+dist/
+build/
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+coverage.html
+
+# Dependency directories (if not using Go modules)
+vendor/
+
+# Go workspace file
+go.work
+
+# IDE - VSCode
+.vscode/
+*.code-workspace
+
+# IDE - GoLand / IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# IDE - Vim
+*.swp
+*.swo
+*~
+
+# IDE - Emacs
+*~
+\#*\#
+.\#*
+
+# OS - macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# OS - Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# OS - Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.cache
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Docker
+docker-compose.override.yml
+
+# Air (live reload for Go)
+tmp/
+
+# Profiling data
+*.prof
+
+# Local configuration files
+config.local.*
+*.local
