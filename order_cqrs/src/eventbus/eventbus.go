@@ -4,18 +4,20 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 var rabbitMQChannel *amqp.Channel
 
+// SetChannel sets the RabbitMQ channel for event publishing and consumption
 func SetChannel(channel *amqp.Channel) {
 	rabbitMQChannel = channel
 }
 
+// PublishEvent serializes an event to JSON and publishes it to the specified RabbitMQ queue
 func PublishEvent(queue string, event interface{}) error {
-	fmt.Println("Publishing event to queue", queue)
 
 	if rabbitMQChannel == nil {
 		return errors.New("RabbitMQ channel not initialized")
@@ -35,7 +37,8 @@ func PublishEvent(queue string, event interface{}) error {
 	})
 }
 
-// ConsumeEvent sets up a consumer for a RabbitMQ queue
+// ConsumeEvent registers a consumer for the specified queue and processes messages
+// using the provided handler function in a goroutine
 func ConsumeEvent(queue string, handler func([]byte) error) error {
 	if rabbitMQChannel == nil {
 		return errors.New("RabbitMQ channel not initialized")
@@ -62,7 +65,7 @@ func ConsumeEvent(queue string, handler func([]byte) error) error {
 	go func() {
 		for message := range messages {
 			if err := handler(message.Body); err != nil {
-				fmt.Printf("Error processing message from queue %s: %v\n", queue, err)
+				log.Printf("Error processing message from queue %s: %v", queue, err)
 			}
 		}
 	}()

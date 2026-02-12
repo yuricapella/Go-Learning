@@ -2,7 +2,6 @@ package database
 
 import (
 	"database/sql"
-	"fmt"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/yuricapella/Go-Learning/order_cqrs/src/config"
@@ -19,8 +18,6 @@ func ConnectMySQL() (*sql.DB, error) {
 		db.Close()
 		return nil, err
 	}
-
-	fmt.Println("Connected to MySQL")
 
 	return db, nil
 }

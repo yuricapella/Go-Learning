@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"log"
 	"time"
 
 	amqp "github.com/rabbitmq/amqp091-go"
@@ -30,7 +31,7 @@ func ConnectRabbitMQ() (*amqp.Connection, *amqp.Channel, error) {
 		}
 
 		if i < maxRetries-1 {
-			fmt.Printf("Failed to connect to RabbitMQ (attempt %d/%d), retrying in %v...\n", i+1, maxRetries, retryInterval)
+			log.Printf("Failed to connect to RabbitMQ (attempt %d/%d), retrying in %v...", i+1, maxRetries, retryInterval)
 			time.Sleep(retryInterval)
 		}
 	}
@@ -44,8 +45,6 @@ func ConnectRabbitMQ() (*amqp.Connection, *amqp.Channel, error) {
 		conn.Close()
 		return nil, nil, fmt.Errorf("failed to open RabbitMQ channel: %w", err)
 	}
-
-	fmt.Println("Connected to RabbitMQ")
 
 	return conn, channel, nil
 }

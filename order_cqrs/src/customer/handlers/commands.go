@@ -2,6 +2,8 @@ package handlers
 
 import (
 	"errors"
+	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -14,24 +16,32 @@ import (
 	"github.com/yuricapella/Go-Learning/order_cqrs/src/responses"
 )
 
+// Create handles HTTP POST requests to create a new customer
+// It validates the command, persists to MySQL, publishes an event, and returns the created ID
 func Create(ginContext *gin.Context) {
 	var command commands.Create
 	if err := ginContext.ShouldBindJSON(&command); err != nil {
-		responses.Error(ginContext, http.StatusBadRequest, errors.New("invalid command"))
+		responses.Error(ginContext, http.StatusBadRequest, responses.ErrInvalidCommand)
 		return
 	}
 
 	db, err := database.ConnectMySQL()
 	if err != nil {
-		responses.Error(ginContext, http.StatusInternalServerError, errors.New("failed to connect to MySQL"))
+		log.Printf("failed to connect to MySQL: %v", err)
+		responses.Error(ginContext, http.StatusInternalServerError, responses.ErrFailedToConnectMySQL)
 		return
 	}
 	defer db.Close()
 
-	mysqlWriteRepository := repositories.NewMySQLWriteRepository(db) // use sua conexão/banco
-	id, createdAt, err := mysqlWriteRepository.Create(command)
+	mysqlWriteRepository := repositories.NewMySQLWriteRepository(db)
+	id, createdAt, err := mysqlWriteRepository.Insert(command)
 	if err != nil {
-		responses.Error(ginContext, http.StatusInternalServerError, errors.New("failed to create customer"))
+		log.Printf("failed to create customer: %v", err)
+		if errors.Is(err, responses.ErrFailedToCreate) {
+			responses.Error(ginContext, http.StatusInternalServerError, responses.ErrFailedToCreate)
+		} else {
+			responses.Error(ginContext, http.StatusInternalServerError, responses.ErrInternalError)
+		}
 		return
 	}
 
@@ -43,9 +53,10 @@ func Create(ginContext *gin.Context) {
 	}
 	err = eventbus.PublishEvent(customerUtils.QueueCustomerCreated, event)
 	if err != nil {
-		responses.Error(ginContext, http.StatusInternalServerError, errors.New("failed to publish event"))
+		log.Printf("failed to publish event: %v", err)
+		responses.Error(ginContext, http.StatusInternalServerError, responses.ErrFailedToPublishEvent)
 		return
 	}
 
-	ginContext.JSON(http.StatusCreated, gin.H{"id": event.ID, "name": event.Name, "email": event.Email})
+	responses.Created(ginContext, fmt.Sprintf("/customers/%d", id), id)
 }

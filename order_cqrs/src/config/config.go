@@ -37,13 +37,11 @@ func Load() {
 		log.Fatal("Error loading .env file: ", err)
 	}
 
-	// Load API Port
 	APIPort, err = strconv.Atoi(os.Getenv("API_PORT"))
 	if err != nil {
 		APIPort = 8080
 	}
 
-	// Load MySQL connection string
 	mysqlHost := os.Getenv("MYSQL_HOST")
 	mysqlPort := os.Getenv("MYSQL_PORT")
 	mysqlUser := os.Getenv("MYSQL_USER")
@@ -58,7 +56,6 @@ func Load() {
 		mysqlDatabase,
 	)
 
-	// Load MongoDB connection string
 	mongodbHost := os.Getenv("MONGODB_HOST")
 	mongodbPort := os.Getenv("MONGODB_PORT")
 	MongoDBDatabaseName = os.Getenv("MONGODB_DATABASE")
@@ -68,7 +65,6 @@ func Load() {
 		mongodbPort,
 	)
 
-	// Load RabbitMQ connection parameters
 	RabbitMQHost = os.Getenv("RABBITMQ_HOST")
 	RabbitMQPort = os.Getenv("RABBITMQ_PORT")
 	RabbitMQUser = os.Getenv("RABBITMQ_USER")

@@ -11,7 +11,7 @@ import (
 
 type ProjectionConsumer func(context.Context) error
 
-// StartAllListeners inicializa todas as projections do sistema como long-running listeners
+// StartAllConsumers initializes and starts all projection consumers as long-running goroutines
 func StartAllConsumers(ctx context.Context) {
 	_, mongoDatabase, err := database.ConnectMongoDB()
 	if err != nil {
@@ -29,6 +29,7 @@ func StartAllConsumers(ctx context.Context) {
 	}
 }
 
+// listConsumers returns all projection consumers configured for the system
 func listConsumers(customerRepo *repositories.MongoDBReadRepository) []ProjectionConsumer {
 	return []ProjectionConsumer{
 		func(ctx context.Context) error { return ConsumeCustomerCreatedEvent(ctx, customerRepo) },

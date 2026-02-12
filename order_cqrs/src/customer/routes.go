@@ -11,4 +11,9 @@ var Routes = []routeschema.Route{
 		Method:          "POST",
 		HandlerFunction: handlers.Create,
 	},
+	{
+		Path:            "/customers/:id",
+		Method:          "GET",
+		HandlerFunction: handlers.GetByID,
+	},
 }

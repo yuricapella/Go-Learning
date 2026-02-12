@@ -12,10 +12,12 @@ import (
 	"github.com/yuricapella/Go-Learning/order_cqrs/src/router"
 )
 
+// main initializes the application, connects to databases and message broker,
+// starts projection consumers, and runs the HTTP server
 func main() {
-	fmt.Println("Order CQRS API")
+	log.Println("Order CQRS API")
 	config.Load()
-	fmt.Println("Running API on port", config.APIPort)
+	log.Printf("Running API on port %d", config.APIPort)
 
 	_, rabbitChannel, err := database.ConnectRabbitMQ()
 	if err != nil {

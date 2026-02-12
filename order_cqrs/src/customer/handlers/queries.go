@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"errors"
+	"log"
 	"net/http"
 	"time"
 
@@ -14,16 +15,18 @@ import (
 	"github.com/yuricapella/Go-Learning/order_cqrs/src/responses"
 )
 
+// GetByID handles HTTP GET requests to retrieve a customer by ID from the read database
 func GetByID(ginContext *gin.Context) {
 	var query queries.GetByID
 	if err := ginContext.ShouldBindUri(&query); err != nil {
-		responses.Error(ginContext, http.StatusBadRequest, errors.New("invalid customer ID"))
+		responses.Error(ginContext, http.StatusBadRequest, responses.ErrInvalidCustomerID)
 		return
 	}
 
 	mongoClient, mongoDatabase, err := database.ConnectMongoDB()
 	if err != nil {
-		responses.Error(ginContext, http.StatusInternalServerError, errors.New("failed to connect to MongoDB"))
+		log.Printf("failed to connect to MongoDB: %v", err)
+		responses.Error(ginContext, http.StatusInternalServerError, responses.ErrFailedToConnectMongo)
 		return
 	}
 	defer mongoClient.Disconnect(context.Background())
@@ -34,11 +37,16 @@ func GetByID(ginContext *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	customer, err := mongoDBReadRepository.GetByID(ctx, query.ID)
+	customerView, err := mongoDBReadRepository.GetByID(ctx, query.ID)
 	if err != nil {
-		responses.Error(ginContext, http.StatusNotFound, errors.New("customer not found"))
+		if errors.Is(err, responses.ErrCustomerNotFound) {
+			responses.Error(ginContext, http.StatusNotFound, responses.ErrCustomerNotFound)
+			return
+		}
+		log.Printf("query error: %v", err)
+		responses.Error(ginContext, http.StatusInternalServerError, responses.ErrInternalError)
 		return
 	}
 
-	responses.JSON(ginContext, http.StatusOK, customer)
+	responses.JSON(ginContext, http.StatusOK, customerView)
 }

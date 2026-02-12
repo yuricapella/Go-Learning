@@ -2,9 +2,11 @@ package repositories
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
-	"github.com/yuricapella/Go-Learning/order_cqrs/src/customer/events"
+	"github.com/yuricapella/Go-Learning/order_cqrs/src/customer/viewmodels"
+	"github.com/yuricapella/Go-Learning/order_cqrs/src/responses"
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )
@@ -13,28 +15,43 @@ type MongoDBReadRepository struct {
 	collection *mongo.Collection
 }
 
+// NewMongoDBReadRepository creates a new MongoDB read repository instance
 func NewMongoDBReadRepository(collection *mongo.Collection) *MongoDBReadRepository {
 	return &MongoDBReadRepository{collection: collection}
 }
 
-func (repository *MongoDBReadRepository) InsertCreatedEvent(ctx context.Context, createdEvent events.Created) error {
-	_, insertError := repository.collection.InsertOne(ctx, createdEvent)
+// Insert adds a customer view model to MongoDB with idempotency check
+// If the customer already exists, it returns nil without error
+func (repository *MongoDBReadRepository) Insert(ctx context.Context, customerView viewmodels.CustomerView) error {
+	_, err := repository.GetByID(ctx, customerView.ID)
+	if err == nil {
+		return nil
+	}
+
+	if !errors.Is(err, responses.ErrCustomerNotFound) {
+		return fmt.Errorf("%w: %v", responses.ErrInternalError, err)
+	}
+
+	_, insertError := repository.collection.InsertOne(ctx, customerView)
 	if insertError != nil {
-		return fmt.Errorf("failed to insert created event: %w", insertError)
+		return fmt.Errorf("%w: %v", responses.ErrInternalError, insertError)
 	}
 	return nil
 }
 
-func (repository *MongoDBReadRepository) GetByID(ctx context.Context, id int64) (events.Created, error) {
-	var customer events.Created
+// GetByID retrieves a customer view model from MongoDB by ID
+// Returns ErrCustomerNotFound if the customer does not exist
+func (repository *MongoDBReadRepository) GetByID(ctx context.Context, id int64) (viewmodels.CustomerView, error) {
+	var customer viewmodels.CustomerView
+
 	filter := bson.M{"id": id}
 
 	err := repository.collection.FindOne(ctx, filter).Decode(&customer)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return events.Created{}, fmt.Errorf("customer with ID %d not found", id)
+			return viewmodels.CustomerView{}, responses.ErrCustomerNotFound
 		}
-		return events.Created{}, fmt.Errorf("failed to find customer by ID: %w", err)
+		return viewmodels.CustomerView{}, fmt.Errorf("%w: %v", responses.ErrInternalError, err)
 	}
 
 	return customer, nil
