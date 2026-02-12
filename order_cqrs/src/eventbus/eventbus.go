@@ -34,3 +34,38 @@ func PublishEvent(queue string, event interface{}) error {
 		Body:        body,
 	})
 }
+
+// ConsumeEvent sets up a consumer for a RabbitMQ queue
+func ConsumeEvent(queue string, handler func([]byte) error) error {
+	if rabbitMQChannel == nil {
+		return errors.New("RabbitMQ channel not initialized")
+	}
+
+	_, err := rabbitMQChannel.QueueDeclare(queue, true, false, false, false, nil)
+	if err != nil {
+		return fmt.Errorf("failed to declare queue: %w", err)
+	}
+
+	messages, err := rabbitMQChannel.Consume(
+		queue,
+		"",
+		true,
+		false,
+		false,
+		false,
+		nil,
+	)
+	if err != nil {
+		return fmt.Errorf("failed to register consumer: %w", err)
+	}
+
+	go func() {
+		for message := range messages {
+			if err := handler(message.Body); err != nil {
+				fmt.Printf("Error processing message from queue %s: %v\n", queue, err)
+			}
+		}
+	}()
+
+	return nil
+}

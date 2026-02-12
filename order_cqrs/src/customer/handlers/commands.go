@@ -8,6 +8,7 @@ import (
 	"github.com/yuricapella/Go-Learning/order_cqrs/src/customer/commands"
 	"github.com/yuricapella/Go-Learning/order_cqrs/src/customer/events"
 	"github.com/yuricapella/Go-Learning/order_cqrs/src/customer/repositories"
+	customerUtils "github.com/yuricapella/Go-Learning/order_cqrs/src/customer/utils"
 	"github.com/yuricapella/Go-Learning/order_cqrs/src/database"
 	"github.com/yuricapella/Go-Learning/order_cqrs/src/eventbus"
 	"github.com/yuricapella/Go-Learning/order_cqrs/src/responses"
@@ -40,7 +41,7 @@ func Create(ginContext *gin.Context) {
 		Email:     command.Email,
 		CreatedAt: createdAt,
 	}
-	err = eventbus.PublishEvent("customer_created", event)
+	err = eventbus.PublishEvent(customerUtils.QueueCustomerCreated, event)
 	if err != nil {
 		responses.Error(ginContext, http.StatusInternalServerError, errors.New("failed to publish event"))
 		return

@@ -2,7 +2,6 @@ package database
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/yuricapella/Go-Learning/order_cqrs/src/config"
@@ -27,7 +26,6 @@ func ConnectMongoDB() (*mongo.Client, *mongo.Database, error) {
 	}
 
 	database := client.Database(config.MongoDBDatabaseName)
-	fmt.Println("Connected to MongoDB")
 
 	return client, database, nil
 }

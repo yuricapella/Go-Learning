@@ -1,12 +1,14 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 
 	"github.com/yuricapella/Go-Learning/order_cqrs/src/config"
 	"github.com/yuricapella/Go-Learning/order_cqrs/src/database"
 	"github.com/yuricapella/Go-Learning/order_cqrs/src/eventbus"
+	"github.com/yuricapella/Go-Learning/order_cqrs/src/projections"
 	"github.com/yuricapella/Go-Learning/order_cqrs/src/router"
 )
 
@@ -20,6 +22,8 @@ func main() {
 		log.Fatal(err)
 	}
 	eventbus.SetChannel(rabbitChannel)
+
+	projections.StartAllConsumers(context.Background())
 
 	router := router.SetupRouter()
 
