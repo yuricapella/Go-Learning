@@ -1,0 +1,14 @@
+order_cqrs/.env
+  h_47b6d452f546b9 1-20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.13",
+  "base_commit_sha": "b97d2616edd310018cfb568390bc8b8cee14c769",
+  "prompts": {},
+  "humans": {
+    "h_47b6d452f546b9": {
+      "author": "yuricapella <yuri.udsantos@mercadolivre.com>"
+    }
+  }
+}
