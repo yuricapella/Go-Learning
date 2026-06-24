@@ -1,0 +1,24 @@
+.gitignore
+  s_1f47d4509271dd::t_a607d41b3a1f79 1-2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.13",
+  "base_commit_sha": "f3022866541c7295bbbff650c9dae4213775bf6b",
+  "prompts": {},
+  "humans": {
+    "h_47b6d452f546b9": {
+      "author": "yuricapella <yuri.udsantos@mercadolivre.com>"
+    }
+  },
+  "sessions": {
+    "s_1f47d4509271dd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a6292630-69f0-4bdc-a712-52d3dbf63a05",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "yuricapella <yuri.udsantos@mercadolivre.com>"
+    }
+  }
+}
