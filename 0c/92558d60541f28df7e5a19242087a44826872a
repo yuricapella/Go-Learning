@@ -1,0 +1,14 @@
+1_golang_do_zero/projeto_2_devbook/.env
+  h_47b6d452f546b9 1-8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.13",
+  "base_commit_sha": "0c92558d60541f28df7e5a19242087a44826872a",
+  "prompts": {},
+  "humans": {
+    "h_47b6d452f546b9": {
+      "author": "yuricapella <yuri.udsantos@mercadolivre.com>"
+    }
+  }
+}
