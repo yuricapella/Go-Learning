@@ -1,0 +1,30 @@
+go_web_service_essentials/readme.md
+  s_1f47d4509271dd::t_c4e3bc8f54f57d 1-3
+go_web_service_essentials/aula-01-go-syntax-struct/main.go
+  s_1f47d4509271dd::t_67baa05df072cb 3
+  s_1f47d4509271dd::t_6fff44e67899e0 1-2,4-7
+go_web_service_essentials/aula-01-go-syntax-struct/sintaxes/sintaxes.go
+  s_1f47d4509271dd::t_17ddb013a875a6 28-29
+  s_1f47d4509271dd::t_2912d753164a9d 1-27,30-97
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.13",
+  "base_commit_sha": "9188ad64af8569401287fe293ec0590ded8dc4d6",
+  "prompts": {},
+  "humans": {
+    "h_47b6d452f546b9": {
+      "author": "yuricapella <yuri.udsantos@mercadolivre.com>"
+    }
+  },
+  "sessions": {
+    "s_1f47d4509271dd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a6292630-69f0-4bdc-a712-52d3dbf63a05",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "yuricapella <yuri.udsantos@mercadolivre.com>"
+    }
+  }
+}
