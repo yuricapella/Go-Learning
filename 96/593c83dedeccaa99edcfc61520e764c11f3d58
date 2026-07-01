@@ -1,0 +1,18 @@
+hackerrank/30-days-of-code/01-data-types/main.go
+  h_47b6d452f546b9 1-30
+hackerrank/30-days-of-code/readme.md
+  h_47b6d452f546b9 1-4
+hackerrank/30-days-of-code/01-data-types/problem.md
+  h_47b6d452f546b9 1-78
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.8",
+  "base_commit_sha": "96593c83dedeccaa99edcfc61520e764c11f3d58",
+  "prompts": {},
+  "humans": {
+    "h_47b6d452f546b9": {
+      "author": "yuricapella <yuri.udsantos@mercadolivre.com>"
+    }
+  }
+}
